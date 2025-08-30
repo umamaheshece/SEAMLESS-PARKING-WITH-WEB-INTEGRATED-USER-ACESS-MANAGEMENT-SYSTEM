@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parking System</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>🚗 Smart Parking</h2>
+        <ul>
+            <li onclick="showSection('welcome')">🏠 Welcome</li>
+            <li onclick="showSection('registration')">📝 User Registration</li>
+            <li onclick="showSection('slots')">🅿️ Slots Availability</li>
+            <li onclick="showSection('logs')">📜 Entry & Exit Logs</li>
+            <li onclick="navigateToValidity()">✅ Check Validity</li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1 align="center">SEAMLESS PARKING WITH WEB INTEGRATED USER ACCESS MANAGEMENT</h1>
+
+        <!-- Welcome Page (Default Section) -->
+        <section id="welcome" class="section">
+            <div class="welcome-container">
+                <h2 class="welcome-title">🚗 Welcome to the RFID-Based Smart Parking System</h2>
+                <p class="description">Your smart parking solution with real-time slot availability, RFID-based entry & exit, and a seamless user experience.</p>
+
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://img.icons8.com/ios/50/000000/rfid-tag.png" alt="RFID Access" />
+                        </div>
+                        <h3>RFID-Based Access</h3>
+                        <p>Automated entry and exit using RFID technology for faster, secure parking.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://img.icons8.com/ios/50/000000/available-updates.png" alt="Real-time Updates" />
+                        </div>
+                        <h3>Real-time Slot Updates</h3>
+                        <p>Monitor live parking slot availability at all times, updated in real-time.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://img.icons8.com/ios/50/000000/lock.png" alt="Secure Registration" />
+                        </div>
+                        <h3>Secure Registration</h3>
+                        <p>Register your vehicle securely and gain authorized access with your RFID tag.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <img src="https://img.icons8.com/ios/50/000000/dashboard.png" alt="Interactive Dashboard" />
+                        </div>
+                        <h3>Interactive Dashboard</h3>
+                        <p>Manage your parking slots effortlessly through an intuitive web dashboard.</p>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="showSection('registration')">🚀 Get Started</button>
+            </div>
+        </section>
+
+        <!-- User Registration -->
+        <section id="registration" class="section" style="display: none;">
+            <h2 align="center">📝 User Registration</h2>
+            <form id="registrationForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter Name" required>
+                <label for="name">Phone Number:</label>
+                <input type="number" id="name" placeholder="Enter Name" required>
+
+
+                <label for="rfid">RFID Tag:</label>
+                <input type="text" id="rfid" placeholder="Enter RFID" required>
+
+                <label for="vehicle">Vehicle Number:</label>
+                <input type="text" id="vehicle" placeholder="Enter Vehicle Number" required>
+
+                <label for="slot">Select Parking Slot:</label>
+                <select id="slot" required>
+                    <option value="" disabled selected>Select a Slot</option>
+                    <option value="Slot 1">Slot 1</option>
+                    <option value="Slot 2">Slot 2</option>
+                    <option value="Slot 3">Slot 3</option>
+                    <option value="Slot 4">Slot 4</option>
+                </select>
+
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <!-- Slots Availability -->
+        <section id="slots" class="section" style="display: none;">
+            <h2>🅿️ Parking Slots Availability</h2>
+            <div id="slotsContainer">
+                <div class="slot" id="slot1" data-slot="1">Slot 1</div>
+                <div class="slot" id="slot2" data-slot="2">Slot 2</div>
+                <div class="slot" id="slot3" data-slot="3">Slot 3</div>
+                <div class="slot" id="slot4" data-slot="4">Slot 4</div>
+            </div>
+        </section>
+
+        <!-- Entry & Exit Logs -->
+        <section id="logs" class="section" style="display: none;">
+            <h2>📜 Entry & Exit Logs</h2>
+            
+            <div class="logs-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>RFID Tag</th>
+                            <th>Vehicle Number</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTable">
+                        <tr><td colspan="4" class="no-logs">No logs available</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Check Validity Section -->
+        <section id="validity" class="section" style="display: none;">
+            <h2>✅ Check Validity</h2>
+            <p>Click the button below to verify the validity of your RFID tag:</p>
+            <button onclick="navigateToValidity()" class="btn">Check Validity</button>
+        </section>
+
+    </main>
+
+    <script>
+        // Function to show different sections
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        // Function to navigate to a validity check page
+        function navigateToValidity() {
+            window.location.href = "http://192.168.155.3:5000/"; // Replace with actual URL
+        }
+    </script>
+
+</body>
+</html>
