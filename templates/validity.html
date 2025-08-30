@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFID Parking System</title>
+    <style>
+        /* Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
+        /* Background styling */
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle, #0f0c29, #302b63, #24243e);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Glassmorphic Container */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            padding: 30px;
+            width: 380px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        /* Heading */
+        h2 {
+            color: #ffffff;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Input Field */
+        .input-group {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            outline: none;
+            box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 0px 12px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Status message */
+        .status {
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 16px;
+            text-align: center;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .waiting {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .granted {
+            background: #2ecc71;
+            color: white;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.8);
+        }
+
+        .denied {
+            background: #e74c3c;
+            color: white;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        /* Animated Glow Effect */
+        @keyframes glow {
+            0% { box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0px 0px 12px rgba(255, 255, 255, 0.6); }
+            100% { box-shadow: 0px 0px 8px rgba(255, 255, 255, 0.3); }
+        }
+        
+        input:focus {
+            animation: glow 1.5s infinite alternate;
+        }
+
+        
+        
+    </style>
+    <script>
+        function fetchRFIDTag() {
+            fetch('/rfid_data') // Call the Flask API to get RFID tag
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rfid_tag').value = data.rfid_tag; // Update RFID input field
+                    let statusElement = document.getElementById('access_status');
+                    statusElement.innerText = data.access_status; // Update access status
+
+                    // Change color based on access status
+                    if (data.access_status === "Access Granted") {
+                        statusElement.className = "status granted";
+                    } else if (data.access_status === "Access Denied") {
+                        statusElement.className = "status denied";
+                    } else {
+                        statusElement.className = "status waiting";
+                    }
+                })
+                .catch(error => console.error('Error fetching RFID data:', error));
+        }
+
+        // Automatically update the RFID tag field every second
+        setInterval(fetchRFIDTag, 1000);
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🚗 RFID Parking System</h2>
+
+        <form action="/update_rfid" method="POST">
+            <div class="input-group">
+                <label for="rfid_tag">Scanned RFID Tag:</label>
+                <input type="text" id="rfid_tag" name="rfid_tag" readonly>
+            </div>
+
+            <p class="status waiting" id="access_status">Waiting for Scan...</p>
+        </form>
+
+        <div class="footer">🚀 Smart Parking System | Powered by IoT & Flask</div>
+    </div>
+
+</body>
+</html>
+
+
+  
+
